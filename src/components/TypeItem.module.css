@@ -1,0 +1,25 @@
+.type {
+    display: flex;
+}
+
+.typeNotSelected {
+    background-color: #3e3e3e;
+    color: #d7d7d7;
+}
+
+.typeIsSelected, .typeNotSelected:hover {
+    background-color: #d7d7d7;
+    color: #3e3e3e;
+}
+
+.typeIsSelected {
+    border-left: 5px solid #cd923b;
+}
+
+.img {
+    display: inline-block;
+}
+
+.name {
+    margin: auto 1rem;
+}

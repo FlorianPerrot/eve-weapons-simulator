@@ -1,0 +1,20 @@
+.wrapper {
+    position: relative;
+}
+
+.search {
+    display: flex;
+}
+
+.search img {
+    position: absolute;
+}
+
+.input {
+    width: 100%;
+    height: 64px;
+    padding: 1rem;
+
+    color: var(--fbc-primary-text);
+    background-color: var(--sf-text-color);
+}

@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: var(--sf-text-color);
+  --background-start-rgb: #29353a;
+  --background-end-rgb: #000000;
+
+  --fbc-blue-60: #0060df;
+  --fbc-blue-70: #003eaa;
+  --fbc-gray-20: #ededf0;
+  --fbc-light-gray: #F0F0F4;
+  --fbc-white: #ffffff;
+  --fbc-transition: all .15s cubic-bezier(.07,.95,0,1);
+  --fbc-borders: 1px solid #ededf0;
+  --fbc-primary-text: #15141A;
+  --fbc-secondary-text: #5B5B66;
+  --fbc-font-size: 13px;
+
+  --sf-background-color: #29353a;
+  --sf-text-color: #fff;
+  --sf-error-color: #f44336;
+  --sf-disabled-color: #636363;
+  --sf-input-border-color: 192,192,192;
+  --sf-input-border-hover-color: #dcdcdc;
+  --sf-input-hover-focus-color: #5ccbcb;
+  --sf-animation-duration: 0.3s;
+  --sf-transition: cubic-bezier(0.4,0,0.2,1);
+  --sf-terms-text-color: #fff;
+  --sf-terms-button-color: #5ccbcb;
+  --sf-terms-checkbox-color: hsla(0,0%,100%,0.4);
+}
+
+body {
+  color: var(--foreground-rgb);
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--background-end-rgb)
+    )
+    var(--background-start-rgb);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

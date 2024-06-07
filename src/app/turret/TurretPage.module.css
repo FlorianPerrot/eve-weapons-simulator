@@ -1,0 +1,11 @@
+.choices {
+    display: flex;
+}
+
+.choices > *:not(:first-child, :last-child) {
+    margin: 0 1rem;
+}
+
+.choices > * {
+    width: 400px;
+}

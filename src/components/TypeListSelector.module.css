@@ -1,0 +1,15 @@
+.wrapper {
+    position: relative;
+    height: 64px;
+}
+
+.typeSelected {
+    position: absolute;
+    width: 100%;
+}
+
+.typeList {
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+}
