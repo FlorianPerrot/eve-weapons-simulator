@@ -1,0 +1,24 @@
+.profile {
+    display: flex;
+}
+
+.profile > img {
+    display: inline-block;
+}
+
+.profile > p {
+    margin: auto 1rem;
+}
+
+.eveSsoButton {
+    text-align: center;
+}
+
+.eveSsoButton > a {
+    display: inline-block;
+}
+
+.eveSsoButton > p {
+    font-size: 0.7rem;
+    color: #cd923b;
+}

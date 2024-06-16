@@ -34,3 +34,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Data importer
+/src/data/raw
+/src/data/extracted
+/src/data/examine
+/src/data/reference-data-latest.tar.xz

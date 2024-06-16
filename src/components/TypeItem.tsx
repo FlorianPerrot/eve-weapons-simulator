@@ -1,11 +1,11 @@
 'use client'
 
 import Image from "next/image";
-import {Type} from "@/libs/EveApi";
 import {MouseEventHandler} from "react";
 import TypeOptionStyles from "./TypeItem.module.css"
+import {EveType} from "@/libs/EveApiEntities";
 
-export default function TypeItem({type, isSelected, onClick}: {type: Type; isSelected: boolean; onClick?: (type: Type) => void}) {
+export default function TypeItem({type, isSelected = false, onClick}: {type: EveType; isSelected?: boolean; onClick?: (type: EveType) => void}) {
     const onEventClick: MouseEventHandler = (e) => {
         e.preventDefault()
         onClick !== undefined && onClick(type)

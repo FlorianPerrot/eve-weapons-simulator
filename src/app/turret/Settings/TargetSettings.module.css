@@ -1,0 +1,19 @@
+.fieldset {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+}
+
+.fieldset input {
+    width: 100%;
+}
+
+.label {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    min-width: 10rem;
+}
+
+.value {
+    text-align: center;
+}

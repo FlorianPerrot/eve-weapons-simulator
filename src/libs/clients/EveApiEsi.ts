@@ -1,15 +1,6 @@
-'use client'
+import {CharacterSkill, EveType} from "@/libs/EveApiEntities";
 
-export type Type = {
-    name: {
-        en: string;
-    }
-
-    type_id: number;
-    group_id: number;
-}
-
-class EveApi {
+export default class EveApiEsi {
 
     accessToken: string
     refreshToken: string
@@ -26,7 +17,7 @@ class EveApi {
         this.refreshToken = eveSsoRefreshTokenCookie.length === 2 ? eveSsoRefreshTokenCookie[1] : ''
     }
 
-    async search(query: string, groupIds: number[] = [], limit: number = 10): Promise<Type[]> {
+    async search(query: string, groupIds: number[] = [], limit: number = 10): Promise<EveType[]> {
         const characterId = await this.getCharacterId()
 
         const searchParams = new URLSearchParams({
@@ -62,9 +53,10 @@ class EveApi {
     getType(id: string) {
         return fetch(`https://ref-data.everef.net/types/${id}`)
             .then(response => response.json())
+
     }
 
-    async getSkills(): Promise<object[]> {
+    async getSkills() {
         const characterId = await this.getCharacterId()
 
         const doFetchCall = () => fetch(`https://esi.evetech.net/latest/characters/${characterId}/skills/?datasource=tranquility`, {
@@ -82,7 +74,7 @@ class EveApi {
             }
         }
 
-        return response.json()
+        return response.json().then((response: { skills: CharacterSkill[] }) => response.skills)
     }
 
     async getCharacterId() {
@@ -124,7 +116,3 @@ class EveApi {
         return jwtPayloadParse;
     }
 }
-
-const eveApi = new EveApi(document.cookie)
-
-export default eveApi

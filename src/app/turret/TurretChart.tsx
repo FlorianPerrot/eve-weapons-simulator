@@ -2,38 +2,34 @@
 
 import 'chart.js/auto';
 import {Line} from "react-chartjs-2";
-import {hitChanceFunction, dpsFunction} from "./TurretCalculator";
-import {Chart, ChartData, ChartOptions} from "chart.js";
+import {hitChanceFunction} from "./TurretCalculator";
+import {ChartData, ChartOptions} from "chart.js";
+import TurretChartStyles from "./TurretChart.module.css"
+import {getDPS, TurretStatsWithBuffs} from "@/libs/TurretStats";
+import {TargetSettingsProps} from "./Settings/TargetSettings";
+import {dpsFunction} from "../missile/MissileCalculator";
 
-export default function TurretChart(props: TurretChartProps) {
+export default function TurretChart({targetSettings, turretStats}: {targetSettings: TargetSettingsProps, turretStats: TurretStatsWithBuffs}) {
+    let range = {
+        start: 0,
+        end: turretStats.falloff*2 + turretStats.optimalRange,
+        step: 500
+    }
+
     const distances = Array.from(
-        {length: (props.range.end-props.range.step)/props.range.step + 1},
-        (v, i) => props.range.start+i*props.range.step
+        {length: (range.end-range.step)/range.step + 1},
+        (v, i) => range.start+i*range.step
     );
 
-    const dpsReducedByDistance = distances.map( (distance) => ({
+    const hitChanceByDistance = distances.map( (distance) => ({
             x: distance,
-            y: dpsFunction(hitChanceFunction(distance, props.turret, props.targetShip))
+            y: hitChanceFunction(distance, targetSettings, turretStats)
         }))
 
-    const lessTransversalVelocityTargetShip = {
-        ...props.targetShip,
-        transversalVelocity: props.targetShip.transversalVelocity / 2
-    }
-
-    const moreTransversalVelocityTargetShip = {
-        ...props.targetShip,
-        transversalVelocity: props.targetShip.transversalVelocity * 2
-    }
-
-    const dpsReducedByDistanceLessVelocity = distances.map( (distance) => ({
+    const dpsByDistance = distances.map( (distance) => ({
             x: distance,
-            y: dpsFunction(hitChanceFunction(distance, props.turret, lessTransversalVelocityTargetShip))
-        }))
-
-    const dpsReducedByDistanceMoreVelocity = distances.map( (distance) => ({
-            x: distance,
-            y: dpsFunction(hitChanceFunction(distance, props.turret, moreTransversalVelocityTargetShip))
+            y: dpsFunction(hitChanceFunction(distance, targetSettings, turretStats))
+                * getDPS(turretStats)
         }))
 
     const options: ChartOptions<"line"> = {
@@ -53,15 +49,26 @@ export default function TurretChart(props: TurretChartProps) {
                     color: ctx => '#303030'
                 }
             },
-            y: {
+            yHitChance: {
                 title: {
                     display: true,
-                    text: 'DPS Reduced in %'
+                    text: 'Hit chance in %'
                 },
+                max: 1.0, min: 0.0,
                 ticks: {
+                    stepSize: 0.1,
                     callback: function(tickValue) {
                         return Number(tickValue) * 100; // Transform 0.5 to 50%
                     }
+                },
+                grid: {
+                    color: ctx => ctx.tick.value === 0.7 ? '#818181' : '#303030'
+                }
+            },
+            yDps: {
+                title: {
+                    display: true,
+                    text: 'DPS'
                 },
                 grid: {
                     color: ctx => ctx.tick.value === 0.7 ? '#818181' : '#303030'
@@ -74,31 +81,27 @@ export default function TurretChart(props: TurretChartProps) {
         labels: distances,
         datasets: [
             {
-                label: lessTransversalVelocityTargetShip.transversalVelocity.toString(),
-                data: dpsReducedByDistanceLessVelocity,
-                borderColor: 'rgb(105,209,81)',
-                backgroundColor: 'rgba(138,255,99,0.5)',
-                pointRadius: 2,
-                tension: 0.3,
-            },
-            {
-                label: props.targetShip.transversalVelocity.toString(),
-                data: dpsReducedByDistance,
+                label: 'Hit Chance',
+                data: hitChanceByDistance,
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
                 pointRadius: 2,
                 tension: 0.3,
+                yAxisID: 'yHitChance'
             },
             {
-                label: moreTransversalVelocityTargetShip.transversalVelocity.toString(),
-                data: dpsReducedByDistanceMoreVelocity,
+                label: 'DPS',
+                data: dpsByDistance,
                 borderColor: 'rgb(235,53,53)',
                 backgroundColor: 'rgba(235,53,53,0.5)',
                 pointRadius: 2,
                 tension: 0.3,
+                yAxisID: 'yDps'
             }
         ],
     };
 
-    return <Line options={options} data={data}/>
+    return <div className={TurretChartStyles.chart}>
+        <Line options={options} data={data} />
+    </div>
 }

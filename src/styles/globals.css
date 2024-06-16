@@ -1,6 +1,4 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 :root {
   --foreground-rgb: var(--sf-text-color);
@@ -32,18 +30,9 @@
   --sf-terms-checkbox-color: hsla(0,0%,100%,0.4);
 }
 
-body {
+html {
+  height: 200%;
   color: var(--foreground-rgb);
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      var(--background-end-rgb)
-    )
-    var(--background-start-rgb);
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  background:
+          linear-gradient(to bottom, var(--background-start-rgb), var(--background-end-rgb), var(--background-start-rgb));
 }
