@@ -1,4 +1,4 @@
-import Choice from "@/components/Choice";
+import EveTypeChoice from "@/components/EveComponents/EveTypeChoice";
 import {useContext, useEffect, useState} from "react";
 import {FittingsSettingsContext} from "../context";
 import {AmmunitionAndCharge, DogmaAttribute, DogmaAttributeId, Ship, Turret} from "@/libs/EveApiEntities";
@@ -43,9 +43,9 @@ export default function FittingSettings() {
 
     return (
         <>
-            <Choice route='turrets' placeholder="Turret" onEveTypeChoice={setTurret}/>
-            <Choice route='ammunitions-charges' dogmas={ammunitionOrChargeDogmasFilter} placeholder="Ammunitions or Charges" onEveTypeChoice={setAmmunitionOrCharge} />
-            <Choice route='ships' placeholder="Ship" onEveTypeChoice={setShip} />
+            <EveTypeChoice route='turrets' placeholder="Turret" onEveTypeChoice={setTurret}/>
+            <EveTypeChoice route='ammunitions-charges' dogmas={ammunitionOrChargeDogmasFilter} placeholder="Ammunitions or Charges" onEveTypeChoice={setAmmunitionOrCharge} />
+            <EveTypeChoice route='ships' placeholder="Ship" onEveTypeChoice={setShip} />
         </>
     )
 }

@@ -1,7 +1,7 @@
 'use client'
 
-import TypeListStyles from "@/components/TypeListSelector.module.css";
-import TypeItem from "@/components/TypeItem";
+import TypeListStyles from "@/components/EveComponents/TypeListSelector.module.css";
+import TypeItem from "@/components/EveComponents/TypeItem";
 import {EveType} from "@/libs/EveApiEntities";
 
 export default function TypeListSelector({eveTypesList, eveTypeSelected, onEveTypeSelected}: {eveTypesList: EveType[], eveTypeSelected?: EveType, onEveTypeSelected?: (type: EveType) => void}) {

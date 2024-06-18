@@ -37,7 +37,10 @@ export default function Turret() {
     })
 
     useEffect(() => {
-        new EveApiEsi(document.cookie).getSkills().then(setSkills)
+        new EveApiEsi(document.cookie)
+            .getSkills()
+            .then(setSkills)
+            .catch(() => { "Ignore" })
     }, []);
 
     useEffect(() => {
@@ -55,7 +58,6 @@ export default function Turret() {
         setTurretStats(tmpTurretStats)
     }, [skills, fittingsSettings, targetSettings]);
 
-
     return (
         <div>
             <FittingsSettingsContext.Provider value={[fittingsSettings, setFittingsSettings]} >
@@ -63,6 +65,11 @@ export default function Turret() {
                     <Settings />
                 </TargetSettingsContext.Provider>
             </FittingsSettingsContext.Provider>
+
+            <p>
+                Tool under construction: report issue or contrib  on <a target="_blank" href="https://github.com/FlorianPerrot/eve-weapons-simulator/issues">Github</a><br/>
+                Precursor turrets, vorton projectors and capital ship turrets not test. Signature radius limited.
+            </p>
 
             <TurretChart
                 turretStats={turretStats}

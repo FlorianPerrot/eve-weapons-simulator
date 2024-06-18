@@ -12,7 +12,7 @@ export default function TypeItem({type, isSelected = false, onClick}: {type: Eve
     }
 
     return (
-        <a className={TypeOptionStyles.type + ' ' + (isSelected ? TypeOptionStyles.typeIsSelected : TypeOptionStyles.typeNotSelected)} href='' key={type.name.en} onClick={onEventClick} data-type-id={type.type_id}>
+        <div className={TypeOptionStyles.type + ' ' + (isSelected ? TypeOptionStyles.typeIsSelected : TypeOptionStyles.typeNotSelected)} key={type.name.en} onClick={onEventClick} data-type-id={type.type_id}>
             <Image className={TypeOptionStyles.img} data-is-selected={isSelected} src={`https://images.evetech.net/types/${type.type_id}/icon?size=64`}
                    alt='' width={64} height={64} unoptimized
                    onError={(event) => {
@@ -20,6 +20,6 @@ export default function TypeItem({type, isSelected = false, onClick}: {type: Eve
                     }}
             />
             <p className={TypeOptionStyles.name}>{type.name.en}</p>
-        </a>
+        </div>
     )
 }

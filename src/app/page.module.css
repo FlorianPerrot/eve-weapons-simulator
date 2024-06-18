@@ -1,0 +1,17 @@
+.home {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+
+@media (min-width: 1024px) {
+    .title {
+        font-size: 5rem;
+    }
+}

@@ -6,8 +6,10 @@ import Menu from "@/components/Menu/Menu";
 import LayoutStyles from "./layout.module.css"
 
 export const metadata: Metadata = {
-    title: "Eve tools",
-    description: "",
+    title: "Eve weapons simulator",
+    description: "EvE Online Weapons simulator, simulate shoot with turret and missile weapons",
+    keywords: [ "eve", "eve online", "simulator", "turret", "missile",
+        "third party", "tracking speed", "velocity", "hit chance" ],
 };
 
 export default function RootLayout({

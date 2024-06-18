@@ -11,8 +11,9 @@ export default function EveProfile() {
     const [characterName, setCharacterName] = useState('');
 
     useEffect(() => {
-        new EveApiEsi(document.cookie).getCharacterId().then(setCharacterId)
-        new EveApiEsi(document.cookie).getCharacterName().then(setCharacterName)
+        const eveApi = new EveApiEsi(document.cookie);
+        eveApi.getCharacterId().then(setCharacterId).catch(() => {})
+        eveApi.getCharacterName().then(setCharacterName).catch(() => {})
     }, [])
 
     return (<div>

@@ -36,3 +36,23 @@ html {
   background:
           linear-gradient(to bottom, var(--background-start-rgb), var(--background-end-rgb), var(--background-start-rgb));
 }
+
+a {
+  position: relative;
+}
+
+a::before {
+  position: absolute;
+  content: "";
+  width: 25%;
+  border: var(--sf-input-hover-focus-color) 0.5px solid;
+  transition: all 0.5s ease-in-out;
+}
+
+a:hover::before {
+  width: 100%;
+}
+
+a:hover {
+  color: var(--sf-input-hover-focus-color);
+}

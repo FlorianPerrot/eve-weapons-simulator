@@ -1,5 +1,6 @@
 .type {
     display: flex;
+    cursor: pointer;
 }
 
 .typeNotSelected {
