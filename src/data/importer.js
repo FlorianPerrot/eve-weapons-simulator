@@ -1,4 +1,8 @@
 const fs = require("fs");
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
+const { Readable } = require('stream');
+const { finished } = require('stream/promises');
 
 const getTypes = () =>
     fs.promises.readFile('./src/data/raw/types.json', 'utf8')
@@ -22,6 +26,19 @@ const getGroups = () =>
 
 const saveFile = function (name, content) {
     return fs.promises.writeFile(`./src/data/extracted/${name}.json`, content)
+}
+
+const downloadAndExtractRefData = async function () {
+    const inputDir = `${__dirname}/reference-data-latest.tar.xz`
+    const outputDir = `${__dirname}/raw/`
+    const url = `https://data.everef.net/reference-data/reference-data-latest.tar.xz`
+    const stream = fs.createWriteStream(inputDir);
+
+    console.log('downloading')
+    const { body } = await fetch(url);
+    await finished(Readable.fromWeb(body).pipe(stream));
+    console.log('tar')
+    await exec(`tar -xvf ${inputDir} -C ${outputDir}`);
 }
 
 const getTypesFromGroupName = async function (name, groupNames) {
@@ -92,6 +109,9 @@ async function extractTypesWithGroupId(id) {
     saveFile(`TYPES with group ${group?.name.en}`, JSON.stringify(typeFromGroup))
 }
 
-// TODO Download `reference-data-latest` and unzip
+async function main() {
+    await downloadAndExtractRefData()
+    await extract()
+}
 
-extract()
+main()

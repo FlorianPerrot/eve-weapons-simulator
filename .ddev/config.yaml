@@ -5,15 +5,15 @@ php_version: "8.1"
 webserver_type: nginx-fpm
 xdebug_enabled: false
 additional_hostnames:
-    - "app.eve-tools"
+    - app.eve-tools
 additional_fqdns: []
 database:
     type: mariadb
     version: "10.4"
 use_dns_when_possible: true
 composer_version: "2"
-nodejs_version: "22"
 web_environment: []
+nodejs_version: "22"
 disable_upload_dirs_warning: true
-
-# cf https://www.lullabot.com/articles/nodejs-development-ddev
+webimage_extra_packages:
+    - xz-utils

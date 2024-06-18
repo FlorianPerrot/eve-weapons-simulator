@@ -36,7 +36,9 @@ yarn-error.log*
 next-env.d.ts
 
 # Data importer
-/src/data/raw
-/src/data/extracted
+/src/data/raw/*
+!/src/data/raw/.gitkeep
+/src/data/extracted/*
+!/src/data/extracted/.gitkeep
 /src/data/examine
 /src/data/reference-data-latest.tar.xz
