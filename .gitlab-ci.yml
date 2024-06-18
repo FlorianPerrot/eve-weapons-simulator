@@ -8,5 +8,5 @@ package:
     IMAGE_TAGED: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker build  -t $IMAGE_TAGED -f Dockerfile .
+    - docker build  -t $IMAGE_TAGED -f .ddev/web-build/Prod.Dockerfile .
     - docker push $IMAGE_TAGED
