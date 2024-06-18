@@ -23,15 +23,7 @@ export default function EveProfile() {
                 <p className={ProfileStyles.name}>{characterName}</p>
             </div> :
             <div className={ProfileStyles.eveSsoButton}>
-                <EveSSOButton
-                    clientId={process.env.NEXT_PUBLIC_EVE_SSO_CLIENT_ID ?? ''}
-                    redirectUri={process.env.NEXT_PUBLIC_EVE_SSO_REDIRECT_URL ?? ''}
-                    scopes={[
-                        'esi-skills.read_skills.v1',
-                        'esi-fittings.read_fittings.v1',
-                        'esi-search.search_structures.v1'
-                    ]}
-                />
+                <EveSSOButton />
                 <p>Login to apply your skills</p>
             </div>
         }
