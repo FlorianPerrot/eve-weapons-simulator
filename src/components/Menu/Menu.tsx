@@ -8,7 +8,7 @@ export default function Menu() {
             </li>
 
             <li className={MenuStyles.navItem}>
-                <a href="/missile" className={MenuStyles.navLink}>Missile simulator (WIP)</a>
+                <a href="/missile" className={MenuStyles.navLink}>Missile simulator</a>
             </li>
         </ul>
     )

@@ -27,6 +27,7 @@ export type EveType = {
 
 export type Ship = EveType
 export type Turret = EveType
+export type Missile = EveType
 export type AmmunitionAndCharge = EveType
 
 export type ShipTrait = {
@@ -79,36 +80,67 @@ export enum SkillId {
     MissileLauncherOperation = '3319', // 2% Bonus to missile launcher rate of fire per skill level
     RapidLaunch = '21071', // 3% bonus to missile launcher rate of fire per level
     WarheadUpgrades = '20315', // 2% bonus to all missile damage per skill level
+    MissileBombardment = '12441', // 10% bonus to all missiles flight time per level
     MissileProjection = '12442', // 10% bonus to all missiles' maximum velocity per level
-    GuidedMissilePrecision = '20312', //5% decrease per level in factor of signature radius for all missile explosions
+    GuidedMissilePrecision = '20312', // 5% decrease per level in factor of signature radius for all missile explosions
     TargetNavigationPrediction = '20314', // 10% decrease per level in factor of target's velocity for all missiles
 }
 
 export enum DogmaAttributeId {
     Unknown = '0',
 
+    MaxVelocity = '37',
     OptimalRange = '54',
     AccuracyFalloff = '158',
     RateOfFire = '51',
     TurretTracking = '160',
     SignatureResolution = '620',
+    ExplosionDelay = '281',
+    AoeVelocity = '653',
+    AoeCloudSize = '654',
+    AoeFalloff = '655',
+    AoeDamageReductionFactor = '1353',
 
     OptimalRangeBonus = '351',
     FalloffBonus = '349',
+    MissileDamageBonus = '213',
+    AoeVelocityBonus = '847',
+    AoeCloudSizeBonus = '848',
+    AoeFalloffBonus = '857',
 
     DamageMultiplier = '64',
+    MissileDamageMultiplier = '212',
     RateOfFireMultiplier = '204',
     TrackingSpeedMultiplier = '244',
     FalloffMultiplier = '517',
     WeaponRangeMultiplier = '120', // Optimal range bonus for ammunition and charge
+    AoeCloudSizeMultiplier = '858',
+    AoeVelocityMultiplier = '859',
+    AoeFalloffMultiplier = '860',
+    MissileVelocityMultiplier = '1469',
+    FlightTimeMultiplier = '646',
 
     EmDamage = '114',
     ExplosiveDamage = '116',
     KineticDamage = '117',
     ThermalDamage = '118',
 
-    UsedWithChargeGroup = '604',
-    UsedWithLauncherGroup = '137',
+    KineticMissileDamageBonus = '1827',
 
-    ChargeSize = '128'
+    UsedWithChargeGroup1 = '604',
+    UsedWithChargeGroup2 = '605',
+    UsedWithChargeGroup3 = '606',
+    UsedWithChargeGroup4 = '609',
+    UsedWithChargeGroup5 = '619',
+
+    UsedWithLauncherGroup = '137',
+    UsedWithLauncherGroup2 = '602',
+    UsedWithLauncherGroup3 = '603',
+    UsedWithLauncherGroup4 = '2076',
+    UsedWithLauncherGroup5 = '2077',
+    UsedWithLauncherGroup6 = '2078',
+
+    ChargeSize = '128',
+
+    ReloadTime = '1795'
 }

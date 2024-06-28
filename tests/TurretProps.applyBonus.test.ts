@@ -1,10 +1,10 @@
 import {describe, it} from "@jest/globals";
-import {applyBonus, TurretStats} from "@/libs/TurretStats";
+import {applyBonus, TurretProps} from "@/libs/turret/TurretProps";
 import {DogmaAttributeId} from "@/libs/EveApiEntities";
 import {equal, notEqual} from "node:assert";
 
-describe('TurretStats', () => {
-    const turretStats: TurretStats = {
+describe('TurretProps', () => {
+    const turretStats: TurretProps = {
         optimalRange: 1000,
         falloff: 1000,
         turretTracking: 50,
@@ -25,7 +25,7 @@ describe('TurretStats', () => {
         ])
 
         equal(turretStatsBuffed.optimalRange, 1500)
-        equal(turretStatsBuffed.rateOfFire, 1.25)
+        equal(turretStatsBuffed.rateOfFire, 2-1.25)
     })
 
     it('should buff falloff & tracking speed', () => {

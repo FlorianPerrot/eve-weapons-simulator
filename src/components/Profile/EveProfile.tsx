@@ -16,6 +16,8 @@ export default function EveProfile() {
         eveApi.getCharacterName().then(setCharacterName).catch(() => {})
     }, [])
 
+    // TODO Logout
+
     return (<div>
         {characterName !== '' ?
             <div className={ProfileStyles.profile}>

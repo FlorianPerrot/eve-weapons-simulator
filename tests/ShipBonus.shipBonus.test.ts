@@ -1,12 +1,12 @@
 import {describe, it} from "@jest/globals";
 import {DogmaAttributeId} from "@/libs/EveApiEntities";
-import {getAllShipBonus} from "@/libs/ShipBonusCalculator";
+import shipBonus from "@/libs/bonus/ShipBonus";
 import {equal} from "node:assert";
 import {charSkills, Rifter, AutoCannonI} from "./data"
 
-describe('Test', function () {
+describe('Ship bonus', function () {
     it('should return bonus', function () {
-        const bonus = getAllShipBonus(Rifter, AutoCannonI, charSkills)
+        const bonus = shipBonus(Rifter, AutoCannonI, charSkills)
 
         equal(bonus.length, 2)
         equal(bonus[0].bonus, 1.225)

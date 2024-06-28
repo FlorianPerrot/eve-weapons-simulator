@@ -1,10 +1,12 @@
 import {describe, it} from "@jest/globals";
-import {applyBonus, applySkillsBonus, TurretStats} from "@/libs/TurretStats";
-import {DogmaAttributeId, SkillId} from "@/libs/EveApiEntities";
-import {equal, notEqual} from "node:assert";
+import {applyBonus, TurretProps} from "@/libs/turret/TurretProps";
+import {SkillId} from "@/libs/EveApiEntities";
+import {equal} from "node:assert";
+import skillTurretBonus from "@/libs/bonus/SkillTurretBonus";
+import {AutoCannonI} from "./data";
 
-describe('TurretStats', () => {
-    const turretStats: TurretStats = {
+describe('TurretProps', () => {
+    const turret: TurretProps = {
         optimalRange: 1000,
         falloff: 1000,
         turretTracking: 50,
@@ -19,7 +21,7 @@ describe('TurretStats', () => {
     }
 
     it('should buff optimalRange & rate of fire', () => {
-        const turretStatsBuffed = applySkillsBonus(turretStats, [
+        const bonus = skillTurretBonus([
             {
                 skill_id: SkillId.RapidFiring,
                 active_skill_level: 2
@@ -28,14 +30,16 @@ describe('TurretStats', () => {
                 skill_id: SkillId.Sharpshooter,
                 active_skill_level: 2
             }
-        ])
+        ], AutoCannonI)
 
-        equal(turretStatsBuffed.optimalRange, 1100)
-        equal(turretStatsBuffed.rateOfFire, 1.08)
+        const turretWithBonus = applyBonus(turret, bonus)
+
+        equal(turretWithBonus.optimalRange, 1100)
+        equal(turretWithBonus.rateOfFire, 2-1.08)
     })
 
     it('should buff falloff & tracking speed', () => {
-        const turretStatsBuffed = applySkillsBonus(turretStats, [
+        const bonus = skillTurretBonus([
             {
                 skill_id: SkillId.TrajectoryAnalysis,
                 active_skill_level: 2
@@ -44,20 +48,24 @@ describe('TurretStats', () => {
                 skill_id: SkillId.MotionPrediction,
                 active_skill_level: 4
             }
-        ])
+        ], AutoCannonI)
 
-        equal(turretStatsBuffed.falloff, 1100)
-        equal(turretStatsBuffed.turretTracking, 60)
+        const turretWithBonus = applyBonus(turret, bonus)
+
+        equal(turretWithBonus.falloff, 1100)
+        equal(turretWithBonus.turretTracking, 60)
     })
 
     it('should buff damages', () => {
-        const turretStatsBuffed = applySkillsBonus(turretStats, [
+        const bonus = skillTurretBonus([
             {
                 skill_id: SkillId.SurgicalStrike,
                 active_skill_level: 5
             },
-        ])
+        ], AutoCannonI)
 
-        equal(turretStatsBuffed.damages.emp, 5*1.15)
+        const turretWithBonus = applyBonus(turret, bonus)
+
+        equal(turretWithBonus.damages.emp, 5*1.15)
     })
 })

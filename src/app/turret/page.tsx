@@ -8,16 +8,22 @@ import {FittingsSettingsContext, TargetSettingsContext} from "./context";
 import {FittingSettingsProps} from "./Settings/FittingSettings";
 import {TargetSettingsProps} from "./Settings/TargetSettings";
 import {CharacterSkill} from "@/libs/EveApiEntities";
-import skillBonus from "@/libs/bonus/SkillBonus";
+import skillTurretBonus from "@/libs/bonus/SkillTurretBonus";
 import shipBonus from "@/libs/bonus/ShipBonus";
 import turretBonus from "@/libs/bonus/TurretBonus";
-import applyAmmunitionAndChargeBonus from "@/libs/bonus/AmmunitionAndChargeBonus";
-import {applyBonus, createTurretStats, TurretStats} from "@/libs/TurretStats";
+import ammunitionAndChargeBonus from "@/libs/bonus/AmmunitionAndChargeBonus";
+import {applyBonus, createTurretProps, TurretProps} from "@/libs/turret/TurretProps";
 import Settings from "./Settings/Settings";
 
 export default function Turret() {
     const [fittingsSettings, setFittingsSettings] = useState<FittingSettingsProps>()
-    const [turretStats, setTurretStats] = useState<TurretStats>({
+    const [targetSettings, setTargetSettings] = useState<TargetSettingsProps>({
+        signatureRadius: 100,
+        transversalVelocity: 400
+    })
+
+    const [skills, setSkills] = useState<CharacterSkill[]>([])
+    const [turret, setTurret] = useState<TurretProps>({
         optimalRange: 1000,
         falloff: 1000,
         turretTracking: 50,
@@ -30,11 +36,6 @@ export default function Turret() {
             thermal: 1
         }
     })
-    const [skills, setSkills] = useState<CharacterSkill[]>([])
-    const [targetSettings, setTargetSettings] = useState<TargetSettingsProps>({
-        signatureRadius: 100,
-        transversalVelocity: 400
-    })
 
     useEffect(() => {
         new EveApiEsi(document.cookie)
@@ -44,18 +45,18 @@ export default function Turret() {
     }, []);
 
     useEffect(() => {
-        let tmpTurretStats = createTurretStats(fittingsSettings?.turret, fittingsSettings?.ammunitionOrCharge)
+        let tmpTurretStats = createTurretProps(fittingsSettings?.turret, fittingsSettings?.ammunitionOrCharge)
 
         const bonus = [
-            ...skillBonus(skills, fittingsSettings?.turret),
+            ...skillTurretBonus(skills, fittingsSettings?.turret),
             ...shipBonus(fittingsSettings?.ship, fittingsSettings?.turret, skills),
             ...turretBonus(fittingsSettings?.turret),
-            ...applyAmmunitionAndChargeBonus(fittingsSettings?.ammunitionOrCharge),
+            ...ammunitionAndChargeBonus(fittingsSettings?.ammunitionOrCharge),
         ]
 
         tmpTurretStats = applyBonus(tmpTurretStats, bonus)
 
-        setTurretStats(tmpTurretStats)
+        setTurret(tmpTurretStats)
     }, [skills, fittingsSettings, targetSettings]);
 
     return (
@@ -68,11 +69,10 @@ export default function Turret() {
 
             <p>
                 Tool under construction: report issue or contrib  on <a target="_blank" href="https://github.com/FlorianPerrot/eve-weapons-simulator/issues">Github</a><br/>
-                Precursor turrets, vorton projectors and capital ship turrets not test. Signature radius limited.
             </p>
 
             <TurretChart
-                turretStats={turretStats}
+                turret={turret}
                 targetSettings={targetSettings}
             />
         </div>

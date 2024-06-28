@@ -75,10 +75,19 @@ const getTypesFromGroupName = async function (name, groupNames) {
 }
 
 const extract = async function() {
-    await getTypesFromGroupName('turrets', ['Projectile Turrets', 'Energy Turrets', 'Hybrid Turrets', 'Precursor Turrets'])
+    await getTypesFromGroupName('turrets', ['Projectile Turrets', 'Energy Turrets', 'Hybrid Turrets'])
     await getTypesFromGroupName('missiles', ['Missile Launchers'])
     await getTypesFromGroupName('ships', ['Ships'])
     await getTypesFromGroupName('ammunitions-charges', ['Missiles', 'Hybrid Charges', 'Projectile Ammo', 'Frequency Crystals', 'Exotic Plasma Charges'])
+}
+
+async function extractSkills() {
+    const types = await getTypes()
+
+    const skills =  Object.values(types).filter(type => type.is_skill)
+    const content = JSON.stringify(skills)
+
+    return await saveFile('skills', content)
 }
 
 async function extractTypeWithDogmas(id) {

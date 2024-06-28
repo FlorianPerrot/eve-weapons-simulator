@@ -1,7 +1,7 @@
 import {SkillBonus} from "@/libs/bonus/Bonus";
 import {CharacterSkill, DogmaAttributeId, SkillId, Turret} from "@/libs/EveApiEntities";
 
-export default function skillBonus(charSkills: CharacterSkill[], turret: Turret | undefined): SkillBonus[] {
+export default function skillTurretBonus(charSkills: CharacterSkill[], turret: Turret | undefined): SkillBonus[] {
     const skillBonus = charSkills.flatMap((skill): SkillBonus[] => {
         if (skill.skill_id == SkillId.Sharpshooter) {
             return [{

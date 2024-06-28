@@ -1,9 +1,9 @@
 import {describe, it} from "@jest/globals";
 import {equal, throws} from "node:assert";
-import {getShipBonusFromShipTrait} from "@/libs/ShipBonusCalculator";
+import {getShipBonusFromShipTrait} from "@/libs/bonus/ShipBonus";
 import {DogmaAttributeId} from "@/libs/EveApiEntities";
 
-describe('Trait', function () {
+describe('getShipBonusFromShipTrait', function () {
     describe('TYPE 28665 Vargur.json', function () {
         it('should extract trait bonus information', function () {
             const traitBonus = getShipBonusFromShipTrait({
@@ -38,31 +38,25 @@ describe('Trait', function () {
 
     describe('Trait without extractable information', function () {
         it('should throw error if no skill found', function () {
-            throws(() => {
-                getShipBonusFromShipTrait({
-                    bonus: 10,
-                    bonus_text: {
-                        en: "bonus damage"
-                    }
-                })
-            }, {
-                name: "Error",
-                message: "Trait not found"
+            const bonus = getShipBonusFromShipTrait({
+                bonus: 10,
+                bonus_text: {
+                    en: "bonus damage"
+                }
             })
+
+            equal(bonus.dogmaAttributeId, DogmaAttributeId.Unknown)
         });
 
         it('should throw error if dogma not found', function () {
-            throws(() => {
-                getShipBonusFromShipTrait({
-                    bonus: 10,
-                    bonus_text: {
-                        en: "reduction in <a href=showinfo:21096>Cynosural Field Generator</a> duration"
-                    }
-                })
-            }, {
-                name: "Error",
-                message: "Trait not found"
+            const bonus = getShipBonusFromShipTrait({
+                bonus: 10,
+                bonus_text: {
+                    en: "reduction in <a href=showinfo:21096>Cynosural Field Generator</a> duration"
+                }
             })
+
+            equal(bonus.dogmaAttributeId, DogmaAttributeId.Unknown)
         });
     })
 });

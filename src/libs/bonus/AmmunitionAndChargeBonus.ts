@@ -1,7 +1,7 @@
 import {AmmunitionAndChargeBonus} from "@/libs/bonus/Bonus";
 import {AmmunitionAndCharge, DogmaAttributeId} from "@/libs/EveApiEntities";
 
-export default function applyAmmunitionAndChargeBonus(ammunitionAndCharge: AmmunitionAndCharge | undefined): AmmunitionAndChargeBonus[] {
+export default function ammunitionAndChargeBonus(ammunitionAndCharge: AmmunitionAndCharge | undefined): AmmunitionAndChargeBonus[] {
     if (ammunitionAndCharge === undefined) return []
 
     const bonus = [

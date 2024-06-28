@@ -2,34 +2,34 @@
 
 import 'chart.js/auto';
 import {Line} from "react-chartjs-2";
-import {hitChanceFunction} from "./TurretCalculator";
 import {ChartData, ChartOptions} from "chart.js";
 import TurretChartStyles from "./TurretChart.module.css"
-import {getDPS, TurretStatsWithBuffs} from "@/libs/TurretStats";
+import {TurretProps} from "@/libs/turret/TurretProps";
 import {TargetSettingsProps} from "./Settings/TargetSettings";
-import {dpsFunction} from "../missile/MissileCalculator";
+import {Turret} from "@/libs/turret/Turret";
 
-export default function TurretChart({targetSettings, turretStats}: {targetSettings: TargetSettingsProps, turretStats: TurretStatsWithBuffs}) {
+export default function TurretChart(props: {targetSettings: TargetSettingsProps, turret: TurretProps}) {
+    const turret = new Turret(props.turret)
+
     let range = {
         start: 0,
-        end: turretStats.falloff*2 + turretStats.optimalRange,
+        end: turret.falloff*1.5 + turret.optimalRange,
         step: 500
     }
 
     const distances = Array.from(
         {length: (range.end-range.step)/range.step + 1},
         (v, i) => range.start+i*range.step
-    );
+    )
 
     const hitChanceByDistance = distances.map( (distance) => ({
             x: distance,
-            y: hitChanceFunction(distance, targetSettings, turretStats)
+            y: turret.hitChance(distance, props.targetSettings.transversalVelocity, props.targetSettings.signatureRadius)
         }))
 
-    const dpsByDistance = distances.map( (distance) => ({
-            x: distance,
-            y: dpsFunction(hitChanceFunction(distance, targetSettings, turretStats))
-                * getDPS(turretStats)
+    const dpsByDistance = hitChanceByDistance.map( ({x, y}) => ({
+            x: x,
+            y: turret.dps(y)
         }))
 
     const options: ChartOptions<"line"> = {
@@ -39,14 +39,26 @@ export default function TurretChart({targetSettings, turretStats}: {targetSettin
                 position: 'top' as const,
             },
         },
+        backgroundColor: 'red',
         scales: {
             x: {
                 title: {
                     display: true,
-                    text: 'in meters'
+                    text: 'in km'
                 },
+                labels: distances.map(distance => {
+                    const distanceInKm = distance / 1000
+                    return  turret.isOptimalRange(distance, range.step) ? `(opti range) ${distanceInKm}` :
+                        turret.isFalloff(distance, range.step) ? `(falloff) ${distanceInKm}` : `${distanceInKm}`
+                }),
                 grid: {
-                    color: ctx => '#303030'
+                    color: ctx => {
+                        return String(ctx.tick.label).includes('opti range') ? 'rgb(235,53,53)' :
+                            String(ctx.tick.label).includes('falloff') ? 'rgb(179,5,12)' : '#303030'
+                    }
+                },
+                ticks: {
+                    autoSkip: false,
                 }
             },
             yHitChance: {
@@ -54,15 +66,9 @@ export default function TurretChart({targetSettings, turretStats}: {targetSettin
                     display: true,
                     text: 'Hit chance in %'
                 },
-                max: 1.0, min: 0.0,
-                ticks: {
-                    stepSize: 0.1,
-                    callback: function(tickValue) {
-                        return Number(tickValue) * 100; // Transform 0.5 to 50%
-                    }
-                },
+                max: 100, min: 0,
                 grid: {
-                    color: ctx => ctx.tick.value === 0.7 ? '#818181' : '#303030'
+                    color: ctx => ctx.tick.value === 70 ? '#818181' : '#303030'
                 }
             },
             yDps: {
@@ -70,9 +76,6 @@ export default function TurretChart({targetSettings, turretStats}: {targetSettin
                     display: true,
                     text: 'DPS'
                 },
-                grid: {
-                    color: ctx => ctx.tick.value === 0.7 ? '#818181' : '#303030'
-                }
             }
         }
     };
@@ -82,7 +85,7 @@ export default function TurretChart({targetSettings, turretStats}: {targetSettin
         datasets: [
             {
                 label: 'Hit Chance',
-                data: hitChanceByDistance,
+                data: hitChanceByDistance.map(point => ({x: point.x, y: point.y*100})),
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
                 pointRadius: 2,

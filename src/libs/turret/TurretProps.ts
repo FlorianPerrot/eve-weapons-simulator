@@ -1,7 +1,7 @@
 import {Bonus} from "@/libs/bonus/Bonus";
-import {AmmunitionAndCharge, DogmaAttributeId, Turret} from "@/libs/EveApiEntities";
+import {AmmunitionAndCharge as ChargeApi, DogmaAttributeId, Turret as TurretApi} from "@/libs/EveApiEntities";
 
-export type TurretStats = {
+export type TurretProps = {
     optimalRange: number;
     falloff: number;
     turretTracking: number;
@@ -15,20 +15,7 @@ export type TurretStats = {
     }
 }
 
-export type TurretStatsWithBuffs = TurretStats
-
-export function getDamages(turretStats: TurretStats): number {
-    return turretStats.damages.emp +
-        turretStats.damages.explosive +
-        turretStats.damages.thermal +
-        turretStats.damages.kinetic
-}
-
-export function getDPS(turretStats: TurretStats): number {
-    return getDamages(turretStats) * (1/(turretStats.rateOfFire/1000))
-}
-
-export function createTurretStats(turret?: Turret, ammunitionAndCharge?: AmmunitionAndCharge): TurretStats {
+export function createTurretProps(turret?: TurretApi, charge?: ChargeApi): TurretProps {
     return {
         falloff: Number(turret?.dogma_attributes[DogmaAttributeId.AccuracyFalloff].value),
         optimalRange: Number(turret?.dogma_attributes[DogmaAttributeId.OptimalRange].value),
@@ -36,16 +23,16 @@ export function createTurretStats(turret?: Turret, ammunitionAndCharge?: Ammunit
         rateOfFire: Number(turret?.dogma_attributes[DogmaAttributeId.RateOfFire].value),
         signatureResolution: Number(turret?.dogma_attributes[DogmaAttributeId.SignatureResolution].value),
         damages: {
-            emp: Number(ammunitionAndCharge?.dogma_attributes[DogmaAttributeId.EmDamage].value),
-            thermal: Number(ammunitionAndCharge?.dogma_attributes[DogmaAttributeId.ThermalDamage].value),
-            kinetic: Number(ammunitionAndCharge?.dogma_attributes[DogmaAttributeId.KineticDamage].value),
-            explosive: Number(ammunitionAndCharge?.dogma_attributes[DogmaAttributeId.ExplosiveDamage].value),
+            emp: Number(charge?.dogma_attributes[DogmaAttributeId.EmDamage].value),
+            thermal: Number(charge?.dogma_attributes[DogmaAttributeId.ThermalDamage].value),
+            kinetic: Number(charge?.dogma_attributes[DogmaAttributeId.KineticDamage].value),
+            explosive: Number(charge?.dogma_attributes[DogmaAttributeId.ExplosiveDamage].value),
         },
     }
 }
 
-export function applyBonus(turretStats: TurretStats, bonus: Bonus[]): TurretStatsWithBuffs {
-    let turretStatsWithBuffs: TurretStatsWithBuffs = {...turretStats}
+export function applyBonus(turretStats: TurretProps, bonus: Bonus[]): TurretProps {
+    let turretStatsWithBuffs: TurretProps = {...turretStats}
 
     bonus.forEach(b => {
         if (b.dogmaAttributeId === DogmaAttributeId.WeaponRangeMultiplier) {

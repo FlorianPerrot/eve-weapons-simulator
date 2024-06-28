@@ -2,20 +2,35 @@
 
 import 'chart.js/auto';
 import {Line} from "react-chartjs-2";
-import {hitChanceFunction, dpsFunction} from "./MissileCalculator";
 import {ChartData, ChartOptions} from "chart.js";
-import MissibleChartStyles from "./MissileChart.module.css"
+import MissileChartStyles from "./MissileChart.module.css"
+import {TargetSettings} from "./context";
+import {MissileProps} from "@/libs/missile/MissileProps";
+import {Missile} from "@/libs/missile/Missile";
 
-export default function MissibleChart(props: MissileChartProps) {
-    const distances = Array.from(
-        {length: (props.range.end-props.range.step)/props.range.step + 1},
-        (v, i) => props.range.start+i*props.range.step
+export default function MissileChart({targetSettings, missileProps}: {targetSettings: TargetSettings, missileProps: MissileProps}) {
+    const missile = new Missile(missileProps)
+
+    let range = {
+        start: 0,
+        end: Math.min(missileProps.explosionVelocity  * 10, 2000),
+        step: 10
+    }
+
+    const velocity = Array.from(
+        {length: (range.end-range.step)/range.step + 1},
+        (v, i) => range.start+i*range.step
     );
 
-    const dpsReducedByDistance = distances.map( (distance) => ({
-            x: distance,
-            y: dpsFunction(hitChanceFunction(distance, props.missile, props.targetShip))
-        }))
+    const damageReduceByVelocity = velocity.map( (v) => ({
+        x: v,
+        y: missile.damageReduction(v, targetSettings.signatureRadius)
+    }))
+
+    const dpsByVelocity = damageReduceByVelocity.map( ({x, y}) => ({
+        x: x,
+        y: missile.dps(y)
+    }))
 
     const options: ChartOptions<"line"> = {
         responsive: true,
@@ -28,47 +43,53 @@ export default function MissibleChart(props: MissileChartProps) {
             x: {
                 title: {
                     display: true,
-                    text: 'in meters'
+                    text: 'in m/s'
                 },
-                axis: "x",
                 grid: {
                     color: ctx => '#303030'
                 }
             },
-            y: {
+            yDamageReduce: {
                 title: {
                     display: true,
-                    text: 'DPS Reduced in %'
+                    text: 'Damage reduce in %'
                 },
-                axis: "y",
-                max: 1, min: 0.0,
-                ticks: {
-                    callback: function(tickValue) {
-                        return Number(tickValue) * 100; // Transform 0.5 to 50%
-                    }
-                },
-                grid: {
-                    color: ctx => ctx.tick.value === 0.7 ? '#818181' : '#303030'
+                max: 100, min: 0,
+            },
+            yDPS: {
+                title: {
+                    display: true,
+                    text: 'dps'
                 }
             }
         }
     };
 
     const data: ChartData<"line"> = {
-        labels: distances,
+        labels: velocity,
         datasets: [
             {
-                label: props.targetShip.transversalVelocity.toString(),
-                data: dpsReducedByDistance,
+                label: 'Damage reduce',
+                data: damageReduceByVelocity.map(point => ({ x: point.x, y: point.y * 100})),
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
                 pointRadius: 2,
                 tension: 0.3,
-            }
+                yAxisID: 'yDamageReduce'
+            },
+            {
+                label: 'DPS',
+                data: dpsByVelocity,
+                borderColor: 'rgb(235,53,53)',
+                backgroundColor: 'rgba(235,53,53,0.5)',
+                pointRadius: 2,
+                tension: 0.3,
+                yAxisID: 'yDPS'
+            },
         ],
     };
 
-    return <div className={MissibleChartStyles.chart}>
+    return <div className={MissileChartStyles.chart}>
         <Line options={options} data={data} />
     </div>
 }
