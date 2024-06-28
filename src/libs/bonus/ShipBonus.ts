@@ -42,9 +42,9 @@ export default function shipBonus(ship: Ship | undefined, weapon: Turret | Missi
 }
 
 export function getShipBonusFromShipTrait(trait: ShipTrait): ShipBonus {
-    const skillReg = /showinfo:(?<skillId>\d+)>.+?<\/a>/g
+    const skillReg = /showinfo:(\d+)>.+?<\/a>/g
     const skillMatchs = Array.from( trait.bonus_text.en.matchAll( skillReg ) )
-    const skillIds = skillMatchs.flatMap(i => i.groups?.skillId ? [ i.groups.skillId ] : [])
+    const skillIds = skillMatchs.flatMap(i => i.length === 2 ? [ i[1] ] : [])
 
     const bonusDogma =[
         { regex: /bonus to kinetic/, dogma: DogmaAttributeId.KineticMissileDamageBonus },
