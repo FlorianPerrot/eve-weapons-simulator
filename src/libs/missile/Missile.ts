@@ -35,12 +35,12 @@ export class Missile implements MissileProps {
         return this.velocity * (this.explosionDelay/1000) // range in meter
     }
 
-    private getMaxDps(): number {
+    getMaxDps(): number {
         const rateOfFireInSec = this.rateOfFire/1000
         return this.getDamages() * (1/rateOfFireInSec)
     }
 
-    private getDamages(): number {
+    getDamages(): number {
         return this.damages.emp +
             this.damages.explosive +
             this.damages.thermal +

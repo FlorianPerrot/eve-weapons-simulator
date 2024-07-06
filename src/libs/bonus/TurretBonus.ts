@@ -9,6 +9,7 @@ export default function turretBonus(turret?: Turret): TurretBonus[] {
     ].flatMap((dogmaAttributeId): TurretBonus[] => {
         if (turret.dogma_attributes.hasOwnProperty(dogmaAttributeId)) {
             return [{
+                source: 'Turret',
                 bonus: Number(turret.dogma_attributes[dogmaAttributeId].value),
                 dogmaAttributeId: dogmaAttributeId
             }]

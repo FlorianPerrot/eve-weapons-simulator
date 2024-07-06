@@ -22,24 +22,24 @@ describe('MissileProps applyBonus', () => {
     it('should buff aoe', () => {
         const turretStatsBuffed = applyBonus(missile, [
             {bonus: 1.5, dogmaAttributeId: DogmaAttributeId.AoeVelocityMultiplier},
-            {bonus: 1.25, dogmaAttributeId: DogmaAttributeId.AoeCloudSizeMultiplier},
+            {bonus: 0.75, dogmaAttributeId: DogmaAttributeId.AoeCloudSizeMultiplier},
             {bonus: 1.25, dogmaAttributeId: DogmaAttributeId.AoeFalloffMultiplier}, // TODO
         ])
 
         equal(turretStatsBuffed.explosionVelocity, 150)
-        equal(turretStatsBuffed.explosionRadius, 100*(2-1.25))
+        equal(turretStatsBuffed.explosionRadius, 75)
     })
 
     it('should buff rate of fire and damage', () => {
         const turretStatsBuffed = applyBonus(missile, [
             {bonus: 1.5, dogmaAttributeId: DogmaAttributeId.DamageMultiplier},
             {bonus: 1.5, dogmaAttributeId: DogmaAttributeId.KineticMissileDamageBonus},
-            {bonus: 1.1, dogmaAttributeId: DogmaAttributeId.RateOfFireMultiplier}, // TODO
+            {bonus: 0.9, dogmaAttributeId: DogmaAttributeId.RateOfFireMultiplier}, // TODO
         ])
 
         equal(turretStatsBuffed.damages.emp, 7.5)
         equal(turretStatsBuffed.damages.kinetic, 11.25)
-        equal(turretStatsBuffed.rateOfFire, 2-1.1)
+        equal(turretStatsBuffed.rateOfFire, 0.9)
     })
 
     it('should buff flight time', () => {

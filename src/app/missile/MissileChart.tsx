@@ -5,11 +5,12 @@ import {Line} from "react-chartjs-2";
 import {ChartData, ChartOptions} from "chart.js";
 import MissileChartStyles from "./MissileChart.module.css"
 import {TargetSettings} from "./context";
-import {MissileProps} from "@/libs/missile/MissileProps";
+import {applyBonus, MissileProps} from "@/libs/missile/MissileProps";
 import {Missile} from "@/libs/missile/Missile";
+import {Bonus} from "@/libs/bonus/Bonus";
 
-export default function MissileChart({targetSettings, missileProps}: {targetSettings: TargetSettings, missileProps: MissileProps}) {
-    const missile = new Missile(missileProps)
+export default function MissileChart({targetSettings, missileProps, bonus}: {targetSettings: TargetSettings, missileProps: MissileProps, bonus: Bonus[]}) {
+    const missile = new Missile(applyBonus(missileProps, bonus))
 
     let range = {
         start: 0,

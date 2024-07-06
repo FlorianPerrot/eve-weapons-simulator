@@ -34,7 +34,7 @@ export function createMissileProps(missile?: MissileApi, charge?: ChargeApi): Mi
 }
 
 export function applyBonus(missileProps: MissileProps, bonus: Bonus[]): MissileProps {
-    let missilePropsWithBuffs: MissileProps = {...missileProps}
+    let missilePropsWithBuffs: MissileProps = {...missileProps, damages: {...missileProps.damages}}
 
     bonus.forEach(b => {
         if (b.dogmaAttributeId === DogmaAttributeId.MissileVelocityMultiplier) {
@@ -44,9 +44,9 @@ export function applyBonus(missileProps: MissileProps, bonus: Bonus[]): MissileP
         } else if (b.dogmaAttributeId === DogmaAttributeId.FlightTimeMultiplier) {
             missilePropsWithBuffs.explosionDelay *= b.bonus
         } else if (b.dogmaAttributeId === DogmaAttributeId.AoeCloudSizeMultiplier) {
-            missilePropsWithBuffs.explosionRadius *= 2-b.bonus
+            missilePropsWithBuffs.explosionRadius *= b.bonus
         } else if (b.dogmaAttributeId === DogmaAttributeId.RateOfFireMultiplier) {
-            missilePropsWithBuffs.rateOfFire *= 2-b.bonus // Convert 1.1 rof to bonus multiplier 0.9
+            missilePropsWithBuffs.rateOfFire *= b.bonus
         } else if (b.dogmaAttributeId === DogmaAttributeId.DamageMultiplier) {
             missilePropsWithBuffs.damages.emp *= b.bonus
             missilePropsWithBuffs.damages.kinetic *= b.bonus

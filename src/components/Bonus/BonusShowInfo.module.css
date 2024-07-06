@@ -1,0 +1,20 @@
+.bonus {
+    color: green;
+}
+
+.malus {
+    color: red;
+}
+
+.root {
+    display: inline-flex;
+    align-items: center;
+}
+
+.root > * {
+    padding: 0 0.5rem;
+}
+
+.root ul {
+    border-left: 1px solid white;
+}

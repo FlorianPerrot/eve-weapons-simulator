@@ -32,7 +32,7 @@ export function createTurretProps(turret?: TurretApi, charge?: ChargeApi): Turre
 }
 
 export function applyBonus(turretStats: TurretProps, bonus: Bonus[]): TurretProps {
-    let turretStatsWithBuffs: TurretProps = {...turretStats}
+    let turretStatsWithBuffs: TurretProps = {...turretStats, damages: {...turretStats.damages}}
 
     bonus.forEach(b => {
         if (b.dogmaAttributeId === DogmaAttributeId.WeaponRangeMultiplier) {
@@ -42,7 +42,7 @@ export function applyBonus(turretStats: TurretProps, bonus: Bonus[]): TurretProp
         } else if (b.dogmaAttributeId === DogmaAttributeId.TrackingSpeedMultiplier) {
             turretStatsWithBuffs.turretTracking *= b.bonus
         } else if (b.dogmaAttributeId === DogmaAttributeId.RateOfFireMultiplier) {
-            turretStatsWithBuffs.rateOfFire *= 2-b.bonus // Convert 1.1 rof to bonus multiplier 0.9
+            turretStatsWithBuffs.rateOfFire *= b.bonus // Convert 1.1 rof to bonus multiplier 0.9
         } else if (b.dogmaAttributeId === DogmaAttributeId.DamageMultiplier) {
             turretStatsWithBuffs.damages.emp *= b.bonus
             turretStatsWithBuffs.damages.kinetic *= b.bonus

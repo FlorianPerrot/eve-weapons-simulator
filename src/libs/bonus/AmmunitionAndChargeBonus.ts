@@ -11,6 +11,7 @@ export default function ammunitionAndChargeBonus(ammunitionAndCharge: Ammunition
     ].flatMap((dogmaAttributeId): AmmunitionAndChargeBonus[] => {
         if (ammunitionAndCharge.dogma_attributes.hasOwnProperty(dogmaAttributeId)) {
             return [{
+                source: 'Charge',
                 bonus: Number(ammunitionAndCharge.dogma_attributes[dogmaAttributeId].value),
                 dogmaAttributeId: dogmaAttributeId
             }]

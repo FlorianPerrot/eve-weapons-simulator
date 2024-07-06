@@ -46,7 +46,7 @@ export class Turret implements TurretProps {
         return distance > falloffDistance - range/2 && distance < falloffDistance + range/3
     }
 
-    private getMaxDps(): number {
+    getMaxDps(): number {
         const rateOfFireInSec = this.rateOfFire/1000
         return this.getDamages() * (1/rateOfFireInSec)
     }

@@ -1,5 +1,5 @@
 import {ShipBonus} from "@/libs/bonus/Bonus";
-import {CharacterSkill, DogmaAttributeId, Ship, ShipTrait, Turret, Missile} from "@/libs/EveApiEntities";
+import {CharacterSkill, DogmaAttributeId, Missile, Ship, ShipTrait, Turret} from "@/libs/EveApiEntities";
 
 export function bonusIsApplicable(shipBonus: ShipBonus, weapon: Turret | Missile): boolean {
     const missileSkills = Object.keys(weapon.required_skills ?? {})
@@ -48,9 +48,9 @@ export function getShipBonusFromShipTrait(trait: ShipTrait): ShipBonus {
 
     const bonusDogma =[
         { regex: /bonus to kinetic/, dogma: DogmaAttributeId.KineticMissileDamageBonus },
-        { regex: /rate of fire/, dogma: DogmaAttributeId.RateOfFireMultiplier },
         { regex: /optimal range/, dogma: DogmaAttributeId.WeaponRangeMultiplier },
         { regex: /falloff/, dogma: DogmaAttributeId.FalloffMultiplier },
+        { regex: /rate of fire/, dogma: DogmaAttributeId.RateOfFireMultiplier },
         { regex: /tracking speed/, dogma: DogmaAttributeId.TrackingSpeedMultiplier },
         { regex: /max velocity/, dogma: DogmaAttributeId.MissileVelocityMultiplier },
         { regex: /explosion radius/, dogma: DogmaAttributeId.AoeCloudSizeMultiplier },
@@ -63,14 +63,21 @@ export function getShipBonusFromShipTrait(trait: ShipTrait): ShipBonus {
 
     if (skillIds.length === 0 || bonusDogma === undefined) {
         return {
+            source: 'Ship',
             bonus: 1,
             dogmaAttributeId: DogmaAttributeId.Unknown,
             skillIdsRequireByModuleToBeApplicable: []
         }
     }
 
+    let bonus = (trait.bonus/100)+1
+    if (bonusDogma.dogma === DogmaAttributeId.RateOfFireMultiplier || bonusDogma.dogma === DogmaAttributeId.AoeCloudSizeMultiplier) {
+        bonus = 2 - bonus
+    }
+
     return {
-        bonus: (trait.bonus/100)+1,
+        source: 'Ship',
+        bonus: bonus,
         skillIdsRequireByModuleToBeApplicable: skillIds,
         dogmaAttributeId: bonusDogma.dogma
     }

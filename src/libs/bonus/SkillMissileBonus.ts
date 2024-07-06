@@ -5,36 +5,43 @@ export default function skillMissleBonus(charSkills: CharacterSkill[], missile: 
     const skillBonus = charSkills.flatMap((skill): SkillBonus[] => {
         if (skill.skill_id == SkillId.MissileLauncherOperation) {
             return [{
-                bonus: 2*skill.active_skill_level/100+1,
+                source: 'Missile Launcher Operation',
+                bonus: 2-(2*skill.active_skill_level/100+1),
                 dogmaAttributeId: DogmaAttributeId.RateOfFireMultiplier
             }]
         } else if (skill.skill_id == SkillId.RapidLaunch) {
             return [{
-                bonus: 3*skill.active_skill_level/100+1,
+                source: 'Rapid Launch',
+                bonus: 2-(3*skill.active_skill_level/100+1),
                 dogmaAttributeId: DogmaAttributeId.RateOfFireMultiplier
             }]
         } else if (skill.skill_id == SkillId.WarheadUpgrades) {
             return [{
+                source: 'Warhead Upgrades',
                 bonus: 2*skill.active_skill_level/100+1,
                 dogmaAttributeId: DogmaAttributeId.DamageMultiplier
             }]
         } else if (skill.skill_id == SkillId.MissileBombardment) {
             return [{
+                source: 'Missile Bombardment',
                 bonus: 10*skill.active_skill_level/100+1,
                 dogmaAttributeId: DogmaAttributeId.FlightTimeMultiplier
             }]
         } else if (skill.skill_id == SkillId.MissileProjection) {
             return [{
+                source: 'Missile Projection',
                 bonus: 10*skill.active_skill_level/100+1,
                 dogmaAttributeId: DogmaAttributeId.MissileVelocityMultiplier
             }]
-        } else if (skill.skill_id == SkillId.GuidedMissilePrecision) {
+        } else if (skill.skill_id == SkillId.GuidedMissilePrecision && skill.active_skill_level) {
             return [{
-                bonus: 5*skill.active_skill_level/100+1,
+                source: 'Guided Missile Precision',
+                bonus: 2-(5*skill.active_skill_level/100+1),
                 dogmaAttributeId: DogmaAttributeId.AoeCloudSizeMultiplier
             }]
         } else if (skill.skill_id == SkillId.TargetNavigationPrediction) {
             return [{
+                source: 'Target Navigation Prediction',
                 bonus: 10*skill.active_skill_level/100+1,
                 dogmaAttributeId: DogmaAttributeId.AoeVelocityMultiplier
             }]
@@ -50,6 +57,7 @@ export default function skillMissleBonus(charSkills: CharacterSkill[], missile: 
                 (21668 == skillId) // XL Torpedoes
             ) {
                 return [{
+                    source: 'Missile skill',
                     bonus: 5*skill.active_skill_level/100+1,
                     dogmaAttributeId: DogmaAttributeId.DamageMultiplier
                 }]
@@ -65,6 +73,7 @@ export default function skillMissleBonus(charSkills: CharacterSkill[], missile: 
                 (41409 == skillId) // XL Cruise Missile Specialization
             ) {
                 return [{
+                    source: 'Specialization skill',
                     bonus: 2*skill.active_skill_level/100+1,
                     dogmaAttributeId: DogmaAttributeId.RateOfFireMultiplier
                 }]

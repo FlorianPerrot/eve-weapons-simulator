@@ -4,12 +4,13 @@ import 'chart.js/auto';
 import {Line} from "react-chartjs-2";
 import {ChartData, ChartOptions} from "chart.js";
 import TurretChartStyles from "./TurretChart.module.css"
-import {TurretProps} from "@/libs/turret/TurretProps";
+import {applyBonus, TurretProps} from "@/libs/turret/TurretProps";
 import {TargetSettingsProps} from "./Settings/TargetSettings";
 import {Turret} from "@/libs/turret/Turret";
+import {Bonus} from "@/libs/bonus/Bonus";
 
-export default function TurretChart(props: {targetSettings: TargetSettingsProps, turret: TurretProps}) {
-    const turret = new Turret(props.turret)
+export default function TurretChart(props: {targetSettings: TargetSettingsProps, turret: TurretProps, bonus: Bonus[]}) {
+    const turret = new Turret(applyBonus(props.turret, props.bonus))
 
     let range = {
         start: 0,

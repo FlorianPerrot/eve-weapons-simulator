@@ -12,30 +12,21 @@ import skillTurretBonus from "@/libs/bonus/SkillTurretBonus";
 import shipBonus from "@/libs/bonus/ShipBonus";
 import turretBonus from "@/libs/bonus/TurretBonus";
 import ammunitionAndChargeBonus from "@/libs/bonus/AmmunitionAndChargeBonus";
-import {applyBonus, createTurretProps, TurretProps} from "@/libs/turret/TurretProps";
+import {createTurretProps, TurretProps} from "@/libs/turret/TurretProps";
 import Settings from "./Settings/Settings";
+import TurretShowInfo from "./TurretShowInfo";
+import {Bonus} from "@/libs/bonus/Bonus";
 
 export default function Turret() {
     const [fittingsSettings, setFittingsSettings] = useState<FittingSettingsProps>()
+    const [bonus, setBonus] = useState<Bonus[]>([])
     const [targetSettings, setTargetSettings] = useState<TargetSettingsProps>({
         signatureRadius: 100,
         transversalVelocity: 400
     })
 
     const [skills, setSkills] = useState<CharacterSkill[]>([])
-    const [turret, setTurret] = useState<TurretProps>({
-        optimalRange: 1000,
-        falloff: 1000,
-        turretTracking: 50,
-        signatureResolution: 40000,
-        rateOfFire: 1000,
-        damages: {
-            emp: 1,
-            explosive: 1,
-            kinetic: 1,
-            thermal: 1
-        }
-    })
+    const [turret, setTurret] = useState<TurretProps>()
 
     useEffect(() => {
         new EveApiEsi(document.cookie)
@@ -45,8 +36,7 @@ export default function Turret() {
     }, []);
 
     useEffect(() => {
-        let tmpTurretStats = createTurretProps(fittingsSettings?.turret, fittingsSettings?.ammunitionOrCharge)
-
+        let turretProps = createTurretProps(fittingsSettings?.turret, fittingsSettings?.ammunitionOrCharge)
         const bonus = [
             ...skillTurretBonus(skills, fittingsSettings?.turret),
             ...shipBonus(fittingsSettings?.ship, fittingsSettings?.turret, skills),
@@ -54,27 +44,27 @@ export default function Turret() {
             ...ammunitionAndChargeBonus(fittingsSettings?.ammunitionOrCharge),
         ]
 
-        tmpTurretStats = applyBonus(tmpTurretStats, bonus)
-
-        setTurret(tmpTurretStats)
+        setBonus(bonus)
+        setTurret(turretProps)
     }, [skills, fittingsSettings, targetSettings]);
 
     return (
         <div>
-            <FittingsSettingsContext.Provider value={[fittingsSettings, setFittingsSettings]} >
+            <FittingsSettingsContext.Provider value={[fittingsSettings, setFittingsSettings]}>
                 <TargetSettingsContext.Provider value={[targetSettings, setTargetSettings]}>
-                    <Settings />
+                    <Settings/>
                 </TargetSettingsContext.Provider>
             </FittingsSettingsContext.Provider>
 
             <p>
-                Tool under construction: report issue or contrib  on <a target="_blank" href="https://github.com/FlorianPerrot/eve-weapons-simulator/issues">Github</a><br/>
+                Tool under construction: report issue or contrib on <a target="_blank" href="https://github.com/FlorianPerrot/eve-weapons-simulator/issues">Github</a><br/>
             </p>
 
-            <TurretChart
-                turret={turret}
-                targetSettings={targetSettings}
-            />
+            {turret && fittingsSettings?.turret && fittingsSettings?.ammunitionOrCharge ?
+                <>
+                    <TurretShowInfo turretProps={turret} bonus={bonus}/>
+                    <TurretChart targetSettings={targetSettings} turret={turret} bonus={bonus}/>
+                </> : ''}
         </div>
     );
 }

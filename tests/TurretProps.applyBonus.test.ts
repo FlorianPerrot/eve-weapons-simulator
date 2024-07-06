@@ -21,11 +21,11 @@ describe('TurretProps', () => {
     it('should buff optimalRange & rate of fire', () => {
         const turretStatsBuffed = applyBonus(turretStats, [
             {bonus: 1.5, dogmaAttributeId: DogmaAttributeId.WeaponRangeMultiplier},
-            {bonus: 1.25, dogmaAttributeId: DogmaAttributeId.RateOfFireMultiplier},
+            {bonus: 0.75, dogmaAttributeId: DogmaAttributeId.RateOfFireMultiplier},
         ])
 
         equal(turretStatsBuffed.optimalRange, 1500)
-        equal(turretStatsBuffed.rateOfFire, 2-1.25)
+        equal(turretStatsBuffed.rateOfFire, 0.75)
     })
 
     it('should buff falloff & tracking speed', () => {

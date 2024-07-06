@@ -5,26 +5,31 @@ export default function skillTurretBonus(charSkills: CharacterSkill[], turret: T
     const skillBonus = charSkills.flatMap((skill): SkillBonus[] => {
         if (skill.skill_id == SkillId.Sharpshooter) {
             return [{
+                source: 'Sharpshooter',
                 bonus: 5*skill.active_skill_level/100+1,
                 dogmaAttributeId: DogmaAttributeId.WeaponRangeMultiplier
             }]
         } else if (skill.skill_id == SkillId.TrajectoryAnalysis) {
             return [{
+                source: 'Trajectory Analysis',
                 bonus: 5*skill.active_skill_level/100+1,
                 dogmaAttributeId: DogmaAttributeId.FalloffMultiplier
             }]
         } else if (skill.skill_id == SkillId.MotionPrediction) {
             return [{
+                source: 'Motion Prediction',
                 bonus: 5*skill.active_skill_level/100+1,
                 dogmaAttributeId: DogmaAttributeId.TrackingSpeedMultiplier
             }]
         } else if (skill.skill_id == SkillId.RapidFiring) {
             return [{
-                bonus: 4*skill.active_skill_level/100+1,
+                source: 'Rapid Firing',
+                bonus: 2-(4*skill.active_skill_level/100+1),
                 dogmaAttributeId: DogmaAttributeId.RateOfFireMultiplier
             }]
         } else if (skill.skill_id == SkillId.SurgicalStrike) {
             return [{
+                source: 'Surgical Strike',
                 bonus: 3*skill.active_skill_level/100+1,
                 dogmaAttributeId: DogmaAttributeId.DamageMultiplier
             }]
@@ -36,7 +41,8 @@ export default function skillTurretBonus(charSkills: CharacterSkill[], turret: T
             // Gunnery
             if (skill.skill_id == SkillId.Gunnery) {
                 return [{
-                    bonus: 2*skill.active_skill_level/100+1,
+                    source: 'Gunnery',
+                    bonus: 2-(2*skill.active_skill_level/100+1),
                     dogmaAttributeId: DogmaAttributeId.RateOfFireMultiplier
                 }]
             }
@@ -49,6 +55,7 @@ export default function skillTurretBonus(charSkills: CharacterSkill[], turret: T
                 (47870 == skillId || skillId == 47871 || skillId == 47872 || skillId == 52998)  // Precursor
             ) {
                 return [{
+                    source: 'Turret skill',
                     bonus: 5*skill.active_skill_level/100+1,
                     dogmaAttributeId: DogmaAttributeId.DamageMultiplier
                 }]
@@ -63,6 +70,7 @@ export default function skillTurretBonus(charSkills: CharacterSkill[], turret: T
                 (54827 >= skillId && skillId >= 54829)
             ) {
                 return [{
+                    source: 'Specialization skill',
                     bonus: 2*skill.active_skill_level/100+1,
                     dogmaAttributeId: DogmaAttributeId.DamageMultiplier
                 }]

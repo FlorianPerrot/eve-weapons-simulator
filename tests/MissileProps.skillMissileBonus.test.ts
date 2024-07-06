@@ -36,7 +36,7 @@ describe('MissileProps', () => {
         const missileWithBonus = applyBonus(missile, bonus)
 
         equal(missileWithBonus.damages.emp, 5*1.1)
-        equal(missileWithBonus.rateOfFire, 1*(2-1.15))
+        equal(missileWithBonus.rateOfFire, 2-1.15)
     })
 
     it('should buff flight time and max velocity', () => {

@@ -9,7 +9,7 @@ describe('Ship bonus', function () {
         const bonus = shipBonus(Rifter, AutoCannonI, charSkills)
 
         equal(bonus.length, 2)
-        equal(bonus[0].bonus, 1.225)
+        equal(bonus[0].bonus, 0.775)
         equal(bonus[0].dogmaAttributeId, DogmaAttributeId.RateOfFireMultiplier)
         equal(bonus[1].bonus, 1.3)
         equal(bonus[1].dogmaAttributeId, DogmaAttributeId.FalloffMultiplier)
