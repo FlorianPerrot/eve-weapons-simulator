@@ -1,5 +1,6 @@
 import {AmmunitionAndCharge as ChargeApi, DogmaAttributeId, Missile as MissileApi,} from "@/libs/EveApiEntities";
 import {Bonus} from "@/libs/bonus/Bonus";
+import {Damages} from "@/libs/WeaponsProps";
 
 export type MissileProps = {
     rateOfFire: number;
@@ -8,12 +9,7 @@ export type MissileProps = {
     explosionRadius: number;
     explosionVelocity: number;
     damageReductionFactor: number;
-    damages: {
-        emp: number;
-        explosive: number;
-        kinetic: number;
-        thermal: number;
-    }
+    damages: Damages
 }
 
 export function createMissileProps(missile?: MissileApi, charge?: ChargeApi): MissileProps {

@@ -37,13 +37,13 @@ html {
           linear-gradient(to bottom, var(--background-start-rgb), var(--background-end-rgb), var(--background-start-rgb));
 }
 
-a, .link-effect {
+.link-effect {
   position: relative;
   cursor: pointer;
   z-index: 0;
 }
 
-a::before, .link-effect::before {
+.link-effect::before {
   position: absolute;
   content: "";
   width: 25%;
@@ -51,10 +51,10 @@ a::before, .link-effect::before {
   transition: all 0.5s ease-in-out;
 }
 
-a:hover::before, .link-effect:hover::before {
+.link-effect:hover::before {
   width: 100%;
 }
 
-a:hover, .link-effect:hover {
+.link-effect:hover {
   color: var(--sf-input-hover-focus-color);
 }

@@ -1,0 +1,12 @@
+.icon {
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+}
+
+.showInfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 3rem;
+    padding: 2rem;
+}

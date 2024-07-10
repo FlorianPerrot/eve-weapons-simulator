@@ -4,11 +4,11 @@ export default function Menu() {
     return (
         <ul className={MenuStyles.nav}>
             <li className={MenuStyles.navItem}>
-                <a className={MenuStyles.navLink} href="/turret">Turret simulator</a>
+                <a className='link-effect' href="/turret">Turret simulator</a>
             </li>
 
             <li className={MenuStyles.navItem}>
-                <a href="/missile" className={MenuStyles.navLink}>Missile simulator</a>
+                <a className="link-effect" href="/missile">Missile simulator</a>
             </li>
         </ul>
     )

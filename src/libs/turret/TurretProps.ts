@@ -1,5 +1,6 @@
 import {Bonus} from "@/libs/bonus/Bonus";
 import {AmmunitionAndCharge as ChargeApi, DogmaAttributeId, Turret as TurretApi} from "@/libs/EveApiEntities";
+import {Damages} from "@/libs/WeaponsProps";
 
 export type TurretProps = {
     optimalRange: number;
@@ -7,12 +8,7 @@ export type TurretProps = {
     turretTracking: number;
     signatureResolution: number;
     rateOfFire: number;
-    damages: {
-        emp: number;
-        explosive: number;
-        kinetic: number;
-        thermal: number;
-    }
+    damages: Damages
 }
 
 export function createTurretProps(turret?: TurretApi, charge?: ChargeApi): TurretProps {

@@ -1,14 +1,20 @@
-import {TurretProps} from "@/libs/turret/TurretProps";
+import {applyBonus, TurretProps} from "@/libs/turret/TurretProps";
+import {Damages} from "@/libs/WeaponsProps";
+import {Bonus} from "@/libs/bonus/Bonus";
 
 export class Turret implements TurretProps {
-    damages: { emp: number; explosive: number; kinetic: number; thermal: number };
+    damages: Damages;
     falloff: number; // meter
     optimalRange: number; // meter
     rateOfFire: number; // millisecond
     signatureResolution: number; // meter
     turretTracking: number;
 
-    constructor(turretProps: TurretProps) {
+    constructor(turretProps: TurretProps, bonus?: Bonus[]) {
+        if (bonus !== undefined) {
+            turretProps = applyBonus(turretProps, bonus)
+        }
+
         this.rateOfFire = turretProps.rateOfFire;
         this.falloff = turretProps.falloff;
         this.optimalRange = turretProps.optimalRange;

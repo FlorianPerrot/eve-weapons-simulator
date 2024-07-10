@@ -1,15 +1,21 @@
-import {MissileProps} from "@/libs/missile/MissileProps";
+import {applyBonus, MissileProps} from "@/libs/missile/MissileProps";
+import {Damages} from "@/libs/WeaponsProps";
+import {Bonus} from "@/libs/bonus/Bonus";
 
 export class Missile implements MissileProps {
     damageReductionFactor: number;
     velocity: number; // meter by second
-    damages: { emp: number; explosive: number; kinetic: number; thermal: number };
+    damages: Damages;
     explosionDelay: number; // millisecond
     explosionRadius: number; // meter
     explosionVelocity: number; // meter by second
     rateOfFire: number; // millisecond
 
-    constructor(missileProps: MissileProps) {
+    constructor(missileProps: MissileProps, bonus?: Bonus[]) {
+        if (bonus !== undefined) {
+            missileProps = applyBonus(missileProps, bonus)
+        }
+
         this.rateOfFire = missileProps.rateOfFire;
         this.velocity = missileProps.velocity;
         this.damageReductionFactor = missileProps.damageReductionFactor;

@@ -22,3 +22,7 @@
     font-size: 0.7rem;
     color: #cd923b;
 }
+
+.logout {
+    display: inline-block;
+}
