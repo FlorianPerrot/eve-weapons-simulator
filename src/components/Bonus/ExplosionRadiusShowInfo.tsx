@@ -15,7 +15,7 @@ export default function ExplosionRadiusShowInfo({missile, bonus}: {missile: Miss
         <span>Explosion radius: </span>
         <span className="link-effect" id="explosionRadius">{missileWithBonus.explosionRadius} m</span>
         <Tooltip anchorSelect="#explosionRadius" openOnClick={true}>
-            = <Image className={Styles.icon} src="/assets/radius.png" alt="emp" width="18" height="18"/>{missile.explosionRadius}{bonusExplosionRadius}
+            = <Image className={Styles.icon} src="/assets/radius.png" alt="radius" width="18" height="18"/>{missile.explosionRadius}{bonusExplosionRadius}
         </Tooltip>
     </div>)
 }

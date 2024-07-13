@@ -15,7 +15,7 @@ export default function ExplosionVelocityShowInfo({missile, bonus}: {missile: Mi
         <span>Explosion velocity: </span>
         <span className="link-effect" id="explosionVelocity">{Math.round(missileWithBonus.explosionVelocity)} m/s</span>
         <Tooltip anchorSelect="#explosionVelocity" openOnClick={true}>
-            = <Image className={Styles.icon} src="/assets/radius.png" alt="emp" width="18" height="18"/>{missile.explosionVelocity}{bonusExplosionVelocity}
+            = <Image className={Styles.icon} src="/assets/radius.png" alt="radius" width="18" height="18"/>{missile.explosionVelocity}{bonusExplosionVelocity}
         </Tooltip>
     </div>)
 }

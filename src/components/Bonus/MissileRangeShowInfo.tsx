@@ -17,9 +17,9 @@ export default function MissileRangeShowInfo({missile, bonus}: {missile: Missile
         <span className="link-effect" id="explosionDelay">{(missileWithBonus.explosionDelay / Math.pow(10, 6) * missileWithBonus.velocity).toFixed(2)} km</span>
         <Tooltip anchorSelect="#explosionDelay" openOnClick={true}>
             =&nbsp;
-            explosion delay(<Image className={Styles.icon} src="/assets/delay.png" alt="emp" width="18" height="18"/>{missile.explosionDelay / 1000}{bonusExplosionDelay})
+            explosion delay(<Image className={Styles.icon} src="/assets/delay.png" alt="delay" width="18" height="18"/>{missile.explosionDelay / 1000}{bonusExplosionDelay})
             &nbsp;x&nbsp;
-            missile velocity(<Image className={Styles.icon} src="/assets/velocity.png" alt="emp" width="18" height="18"/>{missile.velocity}{bonusMissileVelocity})
+            missile velocity(<Image className={Styles.icon} src="/assets/velocity.png" alt="velocity" width="18" height="18"/>{missile.velocity}{bonusMissileVelocity})
         </Tooltip>
     </div>)
 }

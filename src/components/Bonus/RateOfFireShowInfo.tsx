@@ -10,6 +10,6 @@ export default function RateOfFireShowInfo({rateOfFire, bonus}: {rateOfFire: num
     const bonusRateOfFire = <BonusShowInfo bonus={bonus.filter(b => b.dogmaAttributeId === DogmaAttributeId.RateOfFireMultiplier)} />
 
     return (<>
-        rate of fire( <Image className={Styles.icon} src="/assets/rateoffire.png" alt="emp" width="18" height="18" />{rateOfFire/1000}{bonusRateOfFire} )
+        rate of fire( <Image className={Styles.icon} src="/assets/rateOfFire.png" alt="rate of fire" width="18" height="18" />{rateOfFire/1000}{bonusRateOfFire} )
     </>)
 }

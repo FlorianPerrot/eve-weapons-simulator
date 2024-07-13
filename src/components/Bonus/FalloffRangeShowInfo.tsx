@@ -16,9 +16,9 @@ export default function FalloffRangeShowInfo({turretWithoutBonus, turretWithBonu
         <span className="link-effect" id="falloff">{((turretWithBonus.optimalRange + turretWithBonus.falloff) / 1000).toFixed(2)} km</span>
         <Tooltip anchorSelect="#falloff" openOnClick={true}>
             =&nbsp;
-            optimal(<Image className={Styles.icon} src="/assets/range.png" alt="emp" width="18" height="18"/>{turretWithoutBonus.optimalRange}{bonusOptimal})
+            optimal(<Image className={Styles.icon} src="/assets/range.png" alt="range" width="18" height="18"/>{turretWithoutBonus.optimalRange}{bonusOptimal})
             &nbsp;+&nbsp;
-            falloff(<Image className={Styles.icon} src="/assets/falloff.png" alt="emp" width="18" height="18"/>{turretWithoutBonus.falloff}{bonusFalloff})
+            falloff(<Image className={Styles.icon} src="/assets/falloff.png" alt="falloff" width="18" height="18"/>{turretWithoutBonus.falloff}{bonusFalloff})
         </Tooltip>
     </div>)
 }

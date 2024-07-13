@@ -14,7 +14,7 @@ export default function TrackingSpeedShowInfo({turretWithoutBonus, turretWithBon
         <span>Tracking Speed: </span>
         <span className="link-effect" id="turretTracking">{turretWithBonus.turretTracking.toFixed(2)}</span>
         <Tooltip anchorSelect="#turretTracking" openOnClick={true}>
-            = <Image className={Styles.icon} src="/assets/trackingSpeed.png" alt="emp" width="18" height="18"/>{turretWithoutBonus.turretTracking}{bonusTrackingSpeed}
+            = <Image className={Styles.icon} src="/assets/trackingSpeed.png" alt="tracking speed" width="18" height="18"/>{turretWithoutBonus.turretTracking}{bonusTrackingSpeed}
         </Tooltip>
     </div>)
 }

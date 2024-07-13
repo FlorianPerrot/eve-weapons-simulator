@@ -14,7 +14,7 @@ export default function OptimalRangeShowInfo({turret, turretWithBonus, bonus}: {
         <span>Optimal range: </span>
         <span className="link-effect" id="optimalRange">{(turretWithBonus.optimalRange / 1000).toFixed(2)} km</span>
         <Tooltip anchorSelect="#optimalRange" openOnClick={true}>
-            = <Image className={Styles.icon} src="/assets/range.png" alt="emp" width="18" height="18"/>{turret.optimalRange}{bonusOptimal}
+            = <Image className={Styles.icon} src="/assets/range.png" alt="range" width="18" height="18"/>{turret.optimalRange}{bonusOptimal}
         </Tooltip>
     </div>)
 }

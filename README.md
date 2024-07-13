@@ -1,3 +1,5 @@
+## Visit on
+[https://eve-weapons-simulator.distil.lat](https://eve-weapons-simulator.distil.lat)
 
 ## Getting Started
 
@@ -9,4 +11,4 @@ First, run the development server:
 ddev start
 ```
 
-Open [https://app.eve-tools.ddev.site/](https://app.eve-tools.ddev.site/) with your browser to see the result.
+Open [https://eve-tools.ddev.site](https://eve-tools.ddev.site) with your browser to see the result.

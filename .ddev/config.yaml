@@ -1,11 +1,10 @@
-name: eve-tools
+name: eve-weapons-simulator
 type: php
 docroot: ""
 php_version: "8.1"
 webserver_type: nginx-fpm
 xdebug_enabled: false
-additional_hostnames:
-    - app.eve-tools
+additional_hostnames: []
 additional_fqdns: []
 database:
     type: mariadb
